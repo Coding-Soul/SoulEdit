@@ -56,7 +56,7 @@ class StartScreen(tk.CTkFrame):
     def new_note_interaction(self):
         self.destroy()
 
-        note_screen = NoteScreen(self.master, note_text='')
+        note_screen = NoteScreen(self.master, note_text='', note_title="")
         note_screen.pack(fill='both', expand=True)
 
     def open_recent_note_interaction(self):
@@ -70,8 +70,8 @@ class StartScreen(tk.CTkFrame):
             print(directory)
             self.destroy()
 
-            note_text = logic.open_note(directory)
-            note_screen = NoteScreen(self.master, note_text=note_text)
+            note_info = logic.open_note(directory)
+            note_screen = NoteScreen(self.master, note_text=note_info[1], note_title=note_info[0])
             note_screen.pack(fill='both', expand=True)
 
     def open_settings_interaction(self):

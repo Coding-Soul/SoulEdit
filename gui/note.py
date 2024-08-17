@@ -6,18 +6,17 @@ from utils import colors
 
 
 class NoteScreen(tk.CTkFrame):
-    def __init__(self, master, note_text: str):
+    def __init__(self, master, note_text: str, note_title: str):
         super().__init__(master=master)
+        self.note_title_entry = None
         self.textbox = None
         self.note_text = note_text
         self.header()
+        self.note_title(note_title)
         self.note_textbox()
 
     def header(self):
         button_frame = tk.CTkFrame(self)
-        button_frame.columnconfigure(0, weight=1)
-        button_frame.columnconfigure(1, weight=1)
-        button_frame.columnconfigure(2, weight=1)
 
         back_btn = tk.CTkButton(
             button_frame,
@@ -25,9 +24,7 @@ class NoteScreen(tk.CTkFrame):
             font=('Arial', 16),
             height=1,
             width=5,
-            command=self.back_to_start,
-            fg_color='red',
-            hover_color='gray'
+            command=self.back_to_start
         )
         back_btn.grid(row=0, column=0, sticky='w', padx=2.5)
 
@@ -43,6 +40,25 @@ class NoteScreen(tk.CTkFrame):
 
         button_frame.grid(row=0, column=0, sticky='w')
 
+    def note_title(self, title):
+        self.note_title_entry = tk.CTkEntry(
+            self,
+            placeholder_text="Untitled Note",
+            font=('Arial', 25),
+            height=1,
+            width=500,
+            corner_radius=0,
+            fg_color=colors.BACKGROUND_COLOR,
+            border_color=colors.BACKGROUND_COLOR
+        )
+
+        if title != "":
+            self.note_title_entry.insert(tk.END, title)
+
+        self.note_title_entry.grid(row=1, column=0, columnspan=2, sticky='w', padx=(15, 0))
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
     def note_textbox(self):
         self.textbox = tk.CTkTextbox(
             self,
@@ -53,8 +69,8 @@ class NoteScreen(tk.CTkFrame):
         )
         self.textbox.insert(tk.END, self.note_text)
 
-        self.textbox.grid(row=1, column=0, padx=20, pady=10, sticky='nsew')
-        self.grid_rowconfigure(1, weight=1)
+        self.textbox.grid(row=2, column=0, padx=20, sticky='nsew')
+        self.grid_rowconfigure(2, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
     def back_to_start(self):
@@ -67,32 +83,10 @@ class NoteScreen(tk.CTkFrame):
         folder_selected = filedialog.askdirectory(title='Select Folder')
 
         if folder_selected:
-            self.enter_filename(folder_selected=folder_selected)
+            title = self.note_title_entry.get()
 
-            print(folder_selected)
-
-    def enter_filename(self, folder_selected):
-        def on_confirm():
-            note_content = self.textbox
-            filename = entry.get()
-            if filename:
-                logic.save_note(f'{folder_selected}/{filename}.txt', text=note_content.get('1.0', tk.END).strip())
+            if title:
+                logic.save_note(f'{folder_selected}/{title}.txt', text=self.textbox.get('1.0', tk.END).strip())
                 messagebox.showinfo('Saved Note', 'Note has been saved successfully')
             else:
                 messagebox.showinfo('Input Error', 'Please enter a filename')
-
-        def on_cancel():
-            top.destroy()
-
-        top = tk.CTkToplevel(self)
-        top.title("Enter Filename")
-
-        tk.CTkLabel(top, text="Filename:").pack(pady=5)
-        entry = tk.CTkEntry(top, width=50)
-        entry.pack(pady=5)
-
-        btn_frame = tk.CTkFrame(top)
-        btn_frame.pack(pady=5)
-
-        tk.CTkButton(btn_frame, text="Confirm", command=on_confirm).pack(side=tk.LEFT, padx=5)
-        tk.CTkButton(btn_frame, text="Cancel", command=on_cancel).pack(side=tk.LEFT, padx=5)
