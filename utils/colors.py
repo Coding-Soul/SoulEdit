@@ -1,0 +1,1 @@
+BACKGROUND_COLOR = '#2b2b2b'
