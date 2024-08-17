@@ -5,4 +5,6 @@ def save_note(path: str, text):
 
 
 def open_note(path: str):
-    pass
+    with open(path, 'r') as file:
+        text = file.read()
+        return text

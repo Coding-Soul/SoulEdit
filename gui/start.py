@@ -1,8 +1,10 @@
 import customtkinter as tk
-from tkinter import ttk
+
+from core import logic
 from gui.note import NoteScreen
 from utils import colors
 from gui.settings import SettingsScreen
+from tkinter import filedialog
 
 
 class StartScreen(tk.CTkFrame):
@@ -58,10 +60,19 @@ class StartScreen(tk.CTkFrame):
         note_screen.pack(fill='both', expand=True)
 
     def open_recent_note_interaction(self):
-        self.destroy()
+        directory = filedialog.askopenfilename(
+            title='Open a note',
+            initialdir='/',
+            filetypes=(("Text Files", "*.txt"), ("All Files", "*.txt"))
+        )
 
-        note_screen = NoteScreen(self.master, note_text='Bereits vorhandener Text')
-        note_screen.pack(fill='both', expand=True)
+        if directory:
+            print(directory)
+            self.destroy()
+
+            note_text = logic.open_note(directory)
+            note_screen = NoteScreen(self.master, note_text=note_text)
+            note_screen.pack(fill='both', expand=True)
 
     def open_settings_interaction(self):
         self.destroy()
