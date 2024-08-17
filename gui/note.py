@@ -3,8 +3,9 @@ from . import start
 
 
 class NoteScreen(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, note_text: str):
         super().__init__(master=master)
+        self.note_text = note_text
         self.header()
         self.note_textbox()
 
@@ -23,10 +24,11 @@ class NoteScreen(tk.Frame):
     def note_textbox(self):
         textbox = tk.Text(
             self,
-            font=('Arial', 18),
+            font=('Arial', 12),
             wrap='word',
             width=200
         )
+        textbox.insert(tk.END, self.note_text)
 
         textbox.grid(row=1, column=0, padx=20, pady=10, sticky='nsew')
         self.grid_rowconfigure(1, weight=1)
