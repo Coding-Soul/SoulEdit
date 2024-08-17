@@ -33,12 +33,19 @@ class StartScreen(tk.Frame):
 
         open_note_btn = ttk.Button(
             self,
-            text='Open Recent Note'
+            text='Open Recent Note',
+            command=self.open_recent_note_interaction
         )
         open_note_btn.grid(row=1, column=1, sticky='w')
 
     def new_note_interaction(self):
         self.destroy()
 
-        note_screen = NoteScreen(self.master)
+        note_screen = NoteScreen(self.master, note_text='')
+        note_screen.pack(fill='both', expand=True)
+
+    def open_recent_note_interaction(self):
+        self.destroy()
+
+        note_screen = NoteScreen(self.master, note_text='Bereits vorhandener Text')
         note_screen.pack(fill='both', expand=True)
