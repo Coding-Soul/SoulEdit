@@ -2,6 +2,7 @@ import customtkinter as tk
 from . import start
 from core import logic
 from tkinter import messagebox, filedialog
+from utils import colors
 
 
 class NoteScreen(tk.CTkFrame):
@@ -48,7 +49,7 @@ class NoteScreen(tk.CTkFrame):
             font=('Arial', 12),
             wrap='word',
             width=200,
-            fg_color='#2b2b2b'
+            fg_color=colors.BACKGROUND_COLOR
         )
         self.textbox.insert(tk.END, self.note_text)
 
