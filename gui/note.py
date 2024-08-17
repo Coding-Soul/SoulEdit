@@ -55,9 +55,9 @@ class NoteScreen(tk.CTkFrame):
         if title != "":
             self.note_title_entry.insert(tk.END, title)
 
-        self.note_title_entry.grid(row=1, column=0, columnspan=2, sticky='w', padx=(15, 0))
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(0, weight=1)
+        self.note_title_entry.grid(row=1, column=0, columnspan=2, sticky='w', padx=(15, 0), pady=(15, 0))
+        self.grid_rowconfigure(1, weight=0)
+        self.grid_columnconfigure(0, weight=0)
 
     def note_textbox(self):
         self.textbox = tk.CTkTextbox(

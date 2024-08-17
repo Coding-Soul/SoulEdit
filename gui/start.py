@@ -67,7 +67,6 @@ class StartScreen(tk.CTkFrame):
         )
 
         if directory:
-            print(directory)
             self.destroy()
 
             note_info = logic.open_note(directory)
