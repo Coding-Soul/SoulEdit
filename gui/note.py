@@ -1,4 +1,5 @@
 import tkinter as tk
+from . import start
 
 
 class NoteScreen(tk.Frame):
@@ -13,7 +14,8 @@ class NoteScreen(tk.Frame):
             text='Back',
             font=('Arial', 16),
             height=1,
-            width=5
+            width=5,
+            command=self.back_to_start
         )
         back_btn.grid(row=0, column=0, sticky='w')
         self.grid_columnconfigure(0, weight=1)
@@ -29,3 +31,9 @@ class NoteScreen(tk.Frame):
         textbox.grid(row=1, column=0, padx=20, pady=10, sticky='nsew')
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
+    def back_to_start(self):
+        self.destroy()
+
+        start_screen = start.StartScreen(self.master)
+        start_screen.pack(fill='both', expand=True)
