@@ -1,10 +1,10 @@
-import tkinter as tk
+import customtkinter as tk
 from . import start
 from core import logic
 from tkinter import messagebox, filedialog
 
 
-class NoteScreen(tk.Frame):
+class NoteScreen(tk.CTkFrame):
     def __init__(self, master, note_text: str):
         super().__init__(master=master)
         self.textbox = None
@@ -13,22 +13,24 @@ class NoteScreen(tk.Frame):
         self.note_textbox()
 
     def header(self):
-        button_frame = tk.Frame(self)
+        button_frame = tk.CTkFrame(self)
         button_frame.columnconfigure(0, weight=1)
         button_frame.columnconfigure(1, weight=1)
         button_frame.columnconfigure(2, weight=1)
 
-        back_btn = tk.Button(
+        back_btn = tk.CTkButton(
             button_frame,
             text='Back',
             font=('Arial', 16),
             height=1,
             width=5,
-            command=self.back_to_start
+            command=self.back_to_start,
+            fg_color='red',
+            hover_color='gray'
         )
         back_btn.grid(row=0, column=0, sticky='w', padx=2.5)
 
-        save_button = tk.Button(
+        save_button = tk.CTkButton(
             button_frame,
             text='Save Note',
             font=('Arial', 16),
@@ -41,11 +43,12 @@ class NoteScreen(tk.Frame):
         button_frame.grid(row=0, column=0, sticky='w')
 
     def note_textbox(self):
-        self.textbox = tk.Text(
+        self.textbox = tk.CTkTextbox(
             self,
             font=('Arial', 12),
             wrap='word',
-            width=200
+            width=200,
+            fg_color='#2b2b2b'
         )
         self.textbox.insert(tk.END, self.note_text)
 
@@ -80,15 +83,15 @@ class NoteScreen(tk.Frame):
         def on_cancel():
             top.destroy()
 
-        top = tk.Toplevel(self)
+        top = tk.CTkToplevel(self)
         top.title("Enter Filename")
 
-        tk.Label(top, text="Filename:").pack(pady=5)
-        entry = tk.Entry(top, width=50)
+        tk.CTkLabel(top, text="Filename:").pack(pady=5)
+        entry = tk.CTkEntry(top, width=50)
         entry.pack(pady=5)
 
-        btn_frame = tk.Frame(top)
+        btn_frame = tk.CTkFrame(top)
         btn_frame.pack(pady=5)
 
-        tk.Button(btn_frame, text="Confirm", command=on_confirm).pack(side=tk.LEFT, padx=5)
-        tk.Button(btn_frame, text="Cancel", command=on_cancel).pack(side=tk.LEFT, padx=5)
+        tk.CTkButton(btn_frame, text="Confirm", command=on_confirm).pack(side=tk.LEFT, padx=5)
+        tk.CTkButton(btn_frame, text="Cancel", command=on_cancel).pack(side=tk.LEFT, padx=5)

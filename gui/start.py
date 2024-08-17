@@ -1,9 +1,9 @@
-import tkinter as tk
+import customtkinter as tk
 from tkinter import ttk
 from gui.note import NoteScreen
 
 
-class StartScreen(tk.Frame):
+class StartScreen(tk.CTkFrame):
     def __init__(self, master):
         super().__init__(master=master)
         self.welcome_label()
@@ -17,21 +17,21 @@ class StartScreen(tk.Frame):
         self.button_layout()
 
     def welcome_label(self):
-        label = ttk.Label(self,
+        label = tk.CTkLabel(self,
                           text='Welcome to Soul Note',
                           font=('Arial', 18)
                           )
         label.grid(row=0, column=0, columnspan=2)
 
     def button_layout(self):
-        new_note_btn = ttk.Button(
+        new_note_btn = tk.CTkButton(
             self,
             text='New Note',
             command=self.new_note_interaction
         )
-        new_note_btn.grid(row=1, column=0, sticky='e')
+        new_note_btn.grid(row=1, column=0, sticky='e', padx=10)
 
-        open_note_btn = ttk.Button(
+        open_note_btn = tk.CTkButton(
             self,
             text='Open Recent Note',
             command=self.open_recent_note_interaction

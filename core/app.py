@@ -5,7 +5,7 @@ from gui import start
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.version = '0.0.1'
+        self.version = '0.2'
         self.settings()
         self.show_frame(start.StartScreen)
 
